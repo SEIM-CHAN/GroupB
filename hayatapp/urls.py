@@ -4,5 +4,5 @@ from . import views
 
 app_name = 'hayat'
 urlpatterns = [
-    path('', views.IndexView.as_view(), name="index"),
+    path('kimizuka', views.KimizukaView.as_view(), name="kimizuka"),
 ]
