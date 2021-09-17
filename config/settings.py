@@ -37,6 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'ichan.apps.IchanConfig',
+    'aka.apps.AkaConfig',
+    'board.apps.BoardConfig',
+    'bba.apps.BbaConfig'
+    'nice_board.apps.NiceBord',
+    'shiozaki.apps.ShiozakiConfig',
 ]
 
 MIDDLEWARE = [

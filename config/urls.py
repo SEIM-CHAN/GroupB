@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls.conf import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('ichan.urls')),
+    path('', include('aka.urls')),
+    path('', include('board.urls')),
+    path('', include('bba.urls')),
+    path('', include('nice_board.urls')),
+    path('', include('shiozaki.urls')),
 ]
