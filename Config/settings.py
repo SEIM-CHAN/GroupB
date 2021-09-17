@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'shiozaki.apps.ShiozakiConfig',
-    'hayatapp.apps.HayatappConfig',
 ]
 
 MIDDLEWARE = [
