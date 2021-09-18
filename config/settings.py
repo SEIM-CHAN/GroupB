@@ -22,7 +22,7 @@ SECRET_KEY = '2u0c5bs^5_9p93q7%(@%yjnj_^+)2#ta9)2q$=@=g79!)ormvy'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,9 +38,9 @@ INSTALLED_APPS = [
     'ichan.apps.IchanConfig',
     'aka.apps.AkaConfig',
     'board.apps.BoardConfig',
-    'bba.apps.BbaConfig'
-    'nice_board.apps.NiceBord',
-    'shiozaki.apps.ShiozakiConfig',
+    'bba.apps.BbaConfig',
+    'nice_board.apps.NiceBoardConfig',
+    # 'shiozaki.apps.ShiozakiConfig',
 ]
 
 MIDDLEWARE = [
