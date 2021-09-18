@@ -40,7 +40,11 @@ INSTALLED_APPS = [
     'board.apps.BoardConfig',
     'bba.apps.BbaConfig',
     'nice_board.apps.NiceBoardConfig',
-    # 'shiozaki.apps.ShiozakiConfig',
+    'shiozaki.apps.ShiozakiConfig',
+    'accounts.apps.AccountsConfig',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account'
 ]
 
 MIDDLEWARE = [
@@ -122,3 +126,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+SITE_ID = 1
+AUTHENTICATION_BACKENDS = (
+    'allauth.account.auth_backends.AuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
