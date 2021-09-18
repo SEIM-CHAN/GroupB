@@ -26,3 +26,4 @@ urlpatterns = [
     path('', include('nice_board.urls')),
     path('', include('shiozaki.urls')),
 ]
+
