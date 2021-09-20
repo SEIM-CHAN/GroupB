@@ -1,0 +1,19 @@
+{% extends 'nice_board/_base.html' %}
+
+{% load static %}
+
+{% block title %}掲示板 | リスト{% endblock %}
+
+{% block header %}
+<div>HEADER</div>
+{% endblock %}
+
+{% block contents %}
+{% for thread in nicethread_list %}
+<div>
+    <a href="">{{ thread.title }}</a>
+</div>
+{% empty %}
+<p>not found</p>
+{% endfor %}
+{% endblock %}

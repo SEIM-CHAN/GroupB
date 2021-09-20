@@ -1,0 +1,17 @@
+{% extends 'nice_board/_base.html' %}
+
+{% load static %}
+
+{% block title %}掲示板 | リスト作成{% endblock %}
+
+{% block header %}
+<div>HEADER</div>
+{% endblock %}
+
+{% block contents %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table>{{ form.as_table}}</table>
+    <button type="submit">作成</button>
+</form>
+{% endblock %}
