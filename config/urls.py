@@ -23,7 +23,7 @@ urlpatterns = [
     # path('', include('ichan.urls')),
     # path('', include('aka.urls')),
     # path('', include('board.urls')),
-    # path('', include('bba.urls')),
+    path('', include('bba.urls')),
     # path('', include('nice_board.urls')),
     # path('', include('shiozaki.urls')),
 ]
