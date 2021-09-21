@@ -32,5 +32,19 @@ class NiceThreadNewView(LoginRequiredMixin,generic.CreateView):
         messages.success(self.request, 'スレッドの作成に失敗しました')
         return super().form_invalid(form)
 
+class NiceThreadEditView(LoginRequiredMixin, generic.UpdateView):
+    template_name = 'nice_board/threads/edit.html'
+    model = NiceThread
+    form_class = NiceThreadNewForm
+    pk_url_kwarg = 'tpk'
+    def get_success_url(self):
+        return reverse_lazy('nice_board:threads')
+    def form_valid(self, form):
+        messages.success(self.request, 'スレッドを変更しました')
+        return super().form_valid(form)
+    def form_invalid(self, form):
+        messages.success(self.request, 'スレッドの変更に失敗しました')
+        return super().form_invalid(form)
+
 class NiceCommentListView(generic.TemplateView):
     template_name = 'nice_board/comments/list.html'
