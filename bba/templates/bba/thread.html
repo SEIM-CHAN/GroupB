@@ -1,10 +1,16 @@
 {% extends 'bba/base.html' %}
 
+{% block title %}スレッド{% endblock title %}
+
 {% block content %}
+
 <div class="contents">
+    <h4>スレッド一覧</h4>
     <ul>
-        <li><a href="#">sample</a></li>
+        {% for item in object_list %}
+            <li><a href="#">{{ item }}</a></li>
+        {% endfor %}
     </ul>
 </div>
 
-{% endblock %}
+{% endblock content %}
