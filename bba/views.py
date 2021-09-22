@@ -21,9 +21,13 @@ class ThreadListView(generic.ListView):
 #     temaplate_name = 'bba/thread.html'
 #     success_url = reverse_lazy('bba/thread.html')
     
-# class CommentListView(generic.ListView):
-#     model = Comment
-#     template_name = 'bba/comment.html'
+class CommentListView(generic.ListView):
+    model = Comment
+    template_name = 'bba/comment.html'
+
+#     def get_queryset(self):
+#         comment_list = Comment.objects.all()
+#         return super().get_queryset()
 
 # class CommentCreateView(generic.CreateView):
 #     pass

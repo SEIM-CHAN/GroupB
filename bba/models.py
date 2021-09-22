@@ -14,4 +14,5 @@ class Comment(models.Model):
     created_at = models.DateTimeField(verbose_name='作成日時', auto_now_add=True)
 
     def __str__(self):
-        return self.name, self.message, self.created_at
+        title = str(self.thread) + "/" + str(self.created_at)
+        return title
