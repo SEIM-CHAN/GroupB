@@ -9,5 +9,16 @@
 {% endblock %}
 
 {% block contents %}
-<div>詳細ページ</div>
+{% for comment in nicecomments_list %}
+<div>
+    {% if comment.user %}
+    <h3>{{forloop.counter}}: {{ comment.user }}</h3>
+    {% else %}
+    <h3>{{forloop.counter}}: 名無し</h3>
+    {% endif%}
+    <p>{{ comment.text }}</p>
+</div>
+{% empty %}
+<p>not found</p>
+{% endfor %}
 {% endblock %}

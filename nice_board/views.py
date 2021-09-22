@@ -1,14 +1,14 @@
+from django.http import request
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.urls import reverse_lazy
-from .models import NiceThread
+from .models import NiceComments, NiceThread
 from .forms import NiceThreadNewForm
 
 class IndexView(generic.TemplateView):
     template_name = 'nice_board/index.html'
 
-# self.kwargs['pk']
 class NiceThreadListView(generic.ListView):
     template_name = 'nice_board/threads/list.html'
     model = NiceThread
@@ -17,8 +17,8 @@ class NiceThreadListView(generic.ListView):
         threds = NiceThread.objects.order_by('-created_at')
         return threds
 
-class NiceThreadNewView(LoginRequiredMixin,generic.CreateView):
-    template_name = 'nice_board/threads/new.html'
+class NiceThreadCreateView(LoginRequiredMixin,generic.CreateView):
+    template_name = 'nice_board/threads/create.html'
     model = NiceThread
     form_class = NiceThreadNewForm
     success_url = reverse_lazy('nice_board:threads')
@@ -32,11 +32,10 @@ class NiceThreadNewView(LoginRequiredMixin,generic.CreateView):
         messages.success(self.request, 'スレッドの作成に失敗しました')
         return super().form_invalid(form)
 
-class NiceThreadEditView(LoginRequiredMixin, generic.UpdateView):
-    template_name = 'nice_board/threads/edit.html'
+class NiceThreadUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = 'nice_board/threads/update.html'
     model = NiceThread
     form_class = NiceThreadNewForm
-    pk_url_kwarg = 'tpk'
     def get_success_url(self):
         return reverse_lazy('nice_board:threads')
     def form_valid(self, form):
@@ -46,5 +45,19 @@ class NiceThreadEditView(LoginRequiredMixin, generic.UpdateView):
         messages.success(self.request, 'スレッドの変更に失敗しました')
         return super().form_invalid(form)
 
-class NiceCommentListView(generic.TemplateView):
+class NiceThreadDeleteView(generic.DeleteView):
+    template_name = 'nice_board/threads/delete.html'
+    model = NiceThread
+    success_url = reverse_lazy('nice_board:threads')
+    def delete(self, *args, **kwargs):
+        messages.success(self.request, "スレッドを削除しました")
+        return super().delete(request, *args, **kwargs)
+
+
+class NiceCommentListView(generic.ListView):
     template_name = 'nice_board/comments/list.html'
+    model = NiceComments
+
+    def get_queryset(self):
+        comments = NiceComments.objects.filter(nice_thread_id=self.kwargs['pk']).order_by('created_at')
+        return comments

@@ -11,7 +11,7 @@
 {% block contents %}
 {% for thread in nicethread_list %}
 <div>
-    <a href="">{{ thread.title }}</a>
+    <a href="{% url 'nice_board:comments' thread.id %}">{{ thread.title }}</a>
 </div>
 {% empty %}
 <p>not found</p>
