@@ -4,5 +4,6 @@ from . import views
 
 #config/urls.pyにて、path('', include('shiozaki.urls')),を追加
 urlpatterns = [
-    path('', views.ShiozakiView.as_view(), name='shiozaki'),
+    path('', views.ShiozakiView.as_view(), name='index'),
+    path('inquiry/', views.InquiryView.as_view(), name='inquiry'),
 ]
