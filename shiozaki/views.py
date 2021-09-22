@@ -3,4 +3,4 @@ from django.views import generic
 
 # Create your views here.
 class ShiozakiView(generic.TemplateView):
-    template_name = 'shiozaki.html'
+    template_name = 'shiozaki/base.html'
