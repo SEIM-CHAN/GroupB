@@ -3,6 +3,8 @@ from django.views import generic
 
 from django.contrib import messages
 
+from .models import Thread
+
 from .forms import InquiryForm
 
 #from .models import Thread
@@ -16,5 +18,9 @@ class InquiryView(generic.FormView):
     form_class = InquiryForm
 
 class BoardListView(generic.TemplateView):
-    #model = Thread
+    model = Thread
     template_name = 'shiozaki/board_list.html'
+
+class BoardDetailView(generic.TemplateView):
+    model = Thread
+    template_name = 'shiozaki/board_detail.html'

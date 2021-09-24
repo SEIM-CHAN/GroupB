@@ -1,0 +1,76 @@
+{% extends 'shiozaki/base.html' %}
+
+{% load static %}
+
+<!-- タイトル -->
+{% block title %}掲示板詳細{% endblock %}
+
+<!-- コンテンツ -->
+{% block contents %}
+<section class="page-section portfolio" id="portfolio">
+    <!-- 掲示板 -->
+    <div class="container">
+        <div class="row">
+            <div class="my-div-style">
+                <div class="board-box">
+                    <table border="1">
+                        <tr>
+                            <td>
+                                <h1>タイトル</h1>
+                            </td>
+                            <td>
+                                <h6>作成日時：20XX/MM/DD  更新日時：20XX/MM/DD</h6>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <p>本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文</p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <hr>
+                <strong>???件のコメント</strong>
+                
+                <div class="comment-box">
+                    <table border="1">
+                        <tr>
+                            <td>
+                                <strong>ユーザー名</strong>
+                            </td>
+                            <td>
+                                20XX/MM/DD HH:MM:SS
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                ほげぴよほげぴよ
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="comment-box">
+                    <table border="1">
+                        <tr>
+                            <td>
+                                <strong>ユーザー名</strong>
+                            </td>
+                            <td>
+                                20XX/MM/DD HH:MM:SS
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                ほげぴよほげぴよ
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- コメント -->
+</section>
+{% endblock %}
