@@ -1,0 +1,34 @@
+/* wrapper */
+#wrapper{
+    min-width: 575px;
+}
+/* wrapper end */
+/* thread form */
+#form table tr {
+    display: flex;
+}
+
+#form table th {
+    width: 30%;
+}
+
+#form table th label {
+    width: 100%;
+}
+
+#form table td {
+    width: 70%;
+}
+
+#id_title {
+    width: 75%;
+}
+
+#id_desc {
+    width: 100%;
+}
+
+#id_text {
+    width: 100%;
+}
+/* thread form end */

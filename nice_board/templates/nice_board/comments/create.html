@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}掲示板 | リスト作成{% endblock %}
+{% block title %}掲示板 | コメント作成{% endblock %}
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/nice_board/style.css' %}">
 {% endblock %}
@@ -13,8 +13,8 @@
             <form id="form" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <table class="w-100">{{ form.as_table}}</table>
-                <button id="formSubmit" class="btn btn-outline-primary" type="submit">作成</button>
-                <a id="formCancel" class="btn btn-outline-warning" href="{% url 'nice_board:thread_manage' %}">キャンセル</a>
+                <button id="formSubmit" class="btn btn-outline-primary" type="submit">投稿</button>
+                <a id="formCancel" class="btn btn-outline-warning" href="{% url 'nice_board:comments' pk %}">キャンセル</a>
             </form>
         </div>
     </div>

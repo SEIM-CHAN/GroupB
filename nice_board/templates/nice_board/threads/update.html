@@ -3,16 +3,20 @@
 {% load static %}
 
 {% block title %}掲示板 | リスト編集{% endblock %}
-
-{% block header %}
-<div>HEADER</div>
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/nice_board/style.css' %}">
 {% endblock %}
-
 {% block contents %}
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <table>{{ form.as_table}}</table>
-    <button type="submit">編集</button>
-    <a href="">キャンセル</a>
-</form>
+<div class="container" id="contents">
+    <div class="row">
+        <div class="col-12">
+            <form id="form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table class="w-100">{{ form.as_table}}</table>
+                <button id="formSubmit" class="btn btn-outline-primary" type="submit">編集</button>
+                <a id="formCancel" class="btn btn-outline-warning" href="{% url 'nice_board:thread_manage' %}">キャンセル</a>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

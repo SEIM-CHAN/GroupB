@@ -4,16 +4,40 @@
 
 {% block title %}掲示板 | リスト{% endblock %}
 
-{% block header %}
-<div>HEADER</div>
-{% endblock %}
+
 
 {% block contents %}
-{% for thread in nicethread_list %}
-<div>
-    <a href="{% url 'nice_board:comments' thread.id %}">{{ thread.title }}</a>
+<div class="container" id="contents">
+    <div class="accordion accordion-flush" id="accordionList">
+        {% for thread in nicethread_list %}
+        <div class="accordion-item">
+            <div class="accordion-header" id="">
+                <div class="accordion-button {% if not forloop.counter == 1 %}collapsed{% endif %}"
+                    data-bs-toggle="collapse" data-bs-target="#accordion{{ forloop.counter }}" aria-expanded="true"
+                    aria-controls="accordion{{ forloop.counter }}">
+                    <a class="" href="{% url 'nice_board:comments' thread.id %}">
+                        <h2>{{ thread.title|truncatechars:20 }}</h2>
+                    </a>
+                    {% block custom %}{% endblock %}
+
+                </div>
+            </div>
+            <div id="accordion{{ forloop.counter }}"
+                class="accordion-collapse collapse {% if forloop.counter == 1 %}show{% endif %}"
+                aria-labelledby="accordion{{ forloop.counter }}" data-bs-parent=" #accordionList">
+                <div class="accordion-body">
+                    {% if thread.desc %}
+                    {{ thread.desc }}
+                    {% else %}
+                    説明はありません
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>not found</p>
+        {% endfor %}
+    </div>
+
 </div>
-{% empty %}
-<p>not found</p>
-{% endfor %}
 {% endblock %}

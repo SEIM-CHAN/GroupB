@@ -1,0 +1,23 @@
+{% extends 'nice_board/threads/list.html' %}
+{% block head %}
+<style>
+        .accordion-button::after {
+                content: none !important;
+        }
+</style>
+{% endblock %}
+{% block custom %}
+
+{% if user.id == thread.user.id %}
+
+<div class="ms-auto">
+        <a class="text-decoration-none" href="{% url 'nice_board:thread_update' thread.id %}">
+                <span class="btn btn-outline-primary ">編集</span>
+        </a>
+        <a class="text-decoration-none" href="{% url 'nice_board:thread_delete' thread.id %}">
+                <span class="btn btn-outline-danger ">削除</span>
+        </a>
+</div>
+
+{% endif %}
+{% endblock %}

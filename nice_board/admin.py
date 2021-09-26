@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import NiceThread, NiceComments
+from .models import NiceThread, NiceComment
 
 admin.site.register(NiceThread)
-admin.site.register(NiceComments)
+admin.site.register(NiceComment)

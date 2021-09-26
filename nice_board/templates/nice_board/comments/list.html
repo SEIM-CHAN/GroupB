@@ -4,21 +4,84 @@
 
 {% block title %}掲示板 | 中身{% endblock %}
 
-{% block header %}
-<div>HEADER</div>
+{% block head %}
+<style>
+    .comment__number::after,
+    .comment__user::after {
+        content: ":";
+    }
+</style>
 {% endblock %}
 
 {% block contents %}
-{% for comment in nicecomments_list %}
-<div>
-    {% if comment.user %}
-    <h3>{{forloop.counter}}: {{ comment.user }}</h3>
+<div class="container">
+
+    {% if thread %}
+    <div class="row">
+        <h2 class="col-6">{{ thread.title }}</h2>
+        <div class="col-6">
+            <ul class="row">
+                <li class="col-12">作成者<span>{{ thread.user }}</span></li>
+                <li class="col-12">作成日時<span>{{ thread.created_at }}</span></li>
+                <li class="col-12">最終更新日時<span>{{ thread.created_at }}</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        {% if thread.desc %}
+        <p>{{ thread.desc }}</p>
+        {% else %}
+        <p>説明文はありません</p>
+        {% endif %}
+    </div>
     {% else %}
-    <h3>{{forloop.counter}}: 名無し</h3>
-    {% endif%}
-    <p>{{ comment.text }}</p>
+    <div class="row">
+        <h2>スレッド情報がありません</h2>
+    </div>
+    {% endif %}
 </div>
-{% empty %}
-<p>not found</p>
-{% endfor %}
+<div id="contents" class="container">
+    {% for comment in comments %}
+    {% if forloop.first %}
+    <dl class="list-group">
+        {% endif %}
+        <div class="list-group-item list-group-item-wite">
+            <div class="d-flex">
+                <dt class="comment__number h5">{{ forloop.counter }}</dt>
+                {% if comment.user %}
+                <dd class="comment__user ms-3 h5">{{ comment.user }}</dd>
+                {% else %}
+                <dd class="comment__user ms-3 h5">名無し</dd>
+                {% endif%}
+                <dd class="ms-3 h5">{{ comment.created_at }}</dd>
+                {% if user.id == comment.user.id %}
+                <a class="ms-auto btn btn-outline-warning btn-sm">削除</a>
+                {% endif %}
+            </div>
+            <dd>{{ comment.text }}</dd>
+        </div>
+        {% if forloop.last %}
+    </dl>
+    {% endif %}
+    {% empty %}
+    <div class="row">
+        <p>投稿はまだありません</p>
+    </div>
+    {% endfor %}
+</div>
+<div id="commentCreateForm" class="container">
+
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    const URL_COMMENTS = "{% url 'nice_board:comments' thread.id %}";
+    const URL_CREATE_COMMENT_TOOL = "{% url 'nice_board:comment_create_tool' thread.id %}";
+    $(function () {
+        const list = new PageScript("#contents", "#contents", URL_COMMENTS);
+        const form = new PageScript("#commentCreateForm", "#contents", URL_CREATE_COMMENT_TOOL);
+        PageScript.ajaxGet(URL_CREATE_COMMENT_TOOL)
+            .then(data => form.doneCreateView(data, list));
+    });
+</script>
 {% endblock %}
