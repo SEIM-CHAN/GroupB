@@ -1,0 +1,28 @@
+{% extends 'shiozaki/base.html' %}
+
+{% load static %}
+
+<!-- タイトル -->
+{% block title %}掲示板一覧{% endblock %}
+
+<!-- コンテンツ -->
+{% block contents %}
+<section class="page-section portfolio" id="portfolio">
+    <div class="container">
+        <div class="row">
+            <div class="my-div-style">
+                <a href="#">
+                    <table border="1">
+                        <tr>
+                            <td><h4>タイトル</h4></td>
+                        </tr>
+                        <tr>
+                            <td>20XX年MM月DD日 HH:MM</td>
+                        </tr>
+                    </table>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
