@@ -54,10 +54,17 @@
                 <dd class="comment__user ms-3 h5">名無し</dd>
                 {% endif%}
                 <dd class="ms-3 h5">{{ comment.created_at }}</dd>
-                {% if not user.is_anonymous and user.id == comment.user.id %}
+                {% if not user.is_anonymous %}
+                {% if comment.user.id or thread.user.id == user.id %}
                 <a class="ms-auto btn btn-outline-danger btn-sm"
-                    href="{% url 'nice_board:comment_update' thread.id comment.id %}">削除</a>
+                    href="{% url 'nice_board:comment_update' thread.id comment.id %}">
+                    {% if not user.id == comment.user.id and thread.user.id == user.id %}
+                    管理者権限による
+                    {% endif %}
+                    削除</a>
                 {% endif %}
+                {% endif %}
+
 
             </div>
             <dd>{{ comment.text }}</dd>
