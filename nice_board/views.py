@@ -83,7 +83,7 @@ class NiceCommentListView(generic.ListView):
         comments = NiceComment.objects.filter(nice_thread_id=self.kwargs['pk']).order_by('created_at')
         return comments
 
-class NiceCommentCreateView(LoginRequiredMixin,generic.CreateView):
+class NiceCommentCreateView(generic.CreateView):
     """"コメント作成"""
     template_name = 'nice_board/comments/create.html'
     model = NiceComment
@@ -96,7 +96,10 @@ class NiceCommentCreateView(LoginRequiredMixin,generic.CreateView):
        return context
     def form_valid(self, form):
         comment = form.save(commit=False)
-        comment.user = self.request.user
+        if(self.request.user is None):
+            comment.user = None
+        else:
+            comment.user =  self.request.user
         comment.nice_thread = NiceThread.objects.filter(id=self.kwargs['pk']).first()
         print("save")
         comment.save()
