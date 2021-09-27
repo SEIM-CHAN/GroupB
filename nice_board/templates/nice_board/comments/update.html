@@ -1,0 +1,24 @@
+{% extends 'nice_board/_base.html' %}
+
+{% load static %}
+
+{% block title %}掲示板 | コメント削除{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/nice_board/style.css' %}">
+{% endblock %}
+{% block contents %}
+<div class="container" id="contents">
+    <div class="row">
+        <div class="col-12">
+            <h4>ほんとうに削除しますか?</h4>
+            <form id="form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table class="w-100">{{ form.as_table}}</table>
+                <button id="formSubmit" class="btn btn-outline-danger" type="submit">削除</button>
+                <a id="formCancel" class="btn btn-outline-warning" href="{% url 'nice_board:comments' pk %}">キャンセル</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

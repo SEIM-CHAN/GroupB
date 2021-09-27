@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.urls import reverse_lazy, reverse
 from .models import NiceThread, NiceComment
-from .forms import NiceThreadCreateForm, NiceCommentCreateForm
+from .forms import NiceThreadCreateForm, NiceCommentCreateForm, NiceCommentUpdateForm
 
 class IndexView(generic.TemplateView):
     """トップ"""
@@ -19,10 +19,9 @@ class NiceThreadListView(generic.ListView):
         threds = NiceThread.objects.order_by('-created_at')
         return threds
 
-class NiceThreadManageView(LoginRequiredMixin, generic.ListView):
+class NiceThreadManageView(LoginRequiredMixin, NiceThreadListView):
     """スレッド管理"""
     template_name = 'nice_board/threads/manage.html'
-    model = NiceThread
     
     def get_queryset(self):
         threds = NiceThread.objects.filter(user=self.request.user).order_by('-created_at')
@@ -49,14 +48,14 @@ class NiceThreadUpdateView(LoginRequiredMixin, generic.UpdateView):
     template_name = 'nice_board/threads/update.html'
     model = NiceThread
     form_class = NiceThreadCreateForm
-    def get_success_url(self):
-        return reverse_lazy('nice_board:threads')
     def form_valid(self, form):
         messages.success(self.request, 'スレッドを変更しました')
         return super().form_valid(form)
     def form_invalid(self, form):
         messages.success(self.request, 'スレッドの変更に失敗しました')
         return super().form_invalid(form)
+    def get_success_url(self):
+        return reverse_lazy('nice_board:threads')
 
 class NiceThreadDeleteView(LoginRequiredMixin, generic.DeleteView):
     """スレッド削除"""
@@ -73,12 +72,15 @@ class NiceCommentListView(generic.ListView):
     template_name = 'nice_board/comments/list.html'
     context_object_name = 'comments'
     model = NiceComment
+
     def get_context_data(self, **kwargs):
-       context = super(NiceCommentListView, self).get_context_data(**kwargs)
-       context.update({
-           'thread': NiceThread.objects.filter(id=self.kwargs['pk']).first(),
-       })
-       return context
+        """スレッド番号"""
+        context = super(NiceCommentListView, self).get_context_data(**kwargs)
+        context.update({
+            'thread': NiceThread.objects.filter(id=self.kwargs['pk']).first(),
+        })
+        return context
+
     def get_queryset(self):
         comments = NiceComment.objects.filter(nice_thread_id=self.kwargs['pk']).order_by('created_at')
         return comments
@@ -88,31 +90,62 @@ class NiceCommentCreateView(generic.CreateView):
     template_name = 'nice_board/comments/create.html'
     model = NiceComment
     form_class = NiceCommentCreateForm
+
     def get_context_data(self, **kwargs):
-       context = super().get_context_data(**kwargs)
-       context.update({
-           'pk': self.kwargs['pk'],
-       })
-       return context
+        """スレッド番号添付"""
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'pk': self.kwargs['pk'],
+            })
+        return context
+
     def form_valid(self, form):
+        """投稿ユーザー判定"""
         comment = form.save(commit=False)
-        if(self.request.user is None):
+        if(self.request.user.is_anonymous):
             comment.user = None
         else:
             comment.user =  self.request.user
         comment.nice_thread = NiceThread.objects.filter(id=self.kwargs['pk']).first()
-        print("save")
         comment.save()
         messages.success(self.request, 'スレッドを作成しました')
         return super().form_valid(form)
+    
     def form_invalid(self, form):
         messages.success(self.request, 'スレッドの作成に失敗しました')
         return super().form_invalid(form)
 
     def get_success_url(self):
-        if(self.kwargs['none'] == 'none'):
-            return reverse('nice_board:create_tool', kwargs={'pk': self.kwargs['pk']}) 
         return reverse('nice_board:comments', kwargs={'pk': self.kwargs['pk']})
+
 class NiceCommentCreateToolView(NiceCommentCreateView):
+    """コメント作成ループ"""
     def get_success_url(self):
-        return reverse('nice_board:comment_create_tool', kwargs={'pk': self.kwargs['pk']}) 
+        return reverse('nice_board:comment_create_tool', kwargs={'pk': self.kwargs['pk']})
+
+
+class NiceCommentUpdateView(LoginRequiredMixin, generic.UpdateView):
+    """コメント削除"""
+    template_name = 'nice_board/comments/update.html'
+    model = NiceComment
+    form_class = NiceCommentCreateForm
+    pk_url_kwarg = 'pk2'
+    def get_context_data(self, **kwargs):
+        """スレッド番号添付"""
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'pk': self.kwargs['pk'],
+            })
+        return context
+    def get_success_url(self):
+        return reverse_lazy('nice_board:threads')
+    def form_valid(self, form):
+        comment = form.save(commit=False)
+        comment.user = None
+        comment.text = "投稿は削除されました"
+        comment.save()
+        messages.success(self.request, 'コメントを削除しました')
+        return super().form_valid(form)
+    def form_invalid(self, form):
+        messages.success(self.request, 'コメントの削除に失敗しました')
+        return super().form_invalid(form)

@@ -9,6 +9,13 @@ class NiceThreadCreateForm(forms.ModelForm):
         def __init__(self, *args, **kwargs):
             super().__init__( *args, **kwargs)
 
+class NiceCommentUpdateForm(forms.ModelForm):
+    class Meta:
+        model = NiceComment
+        fields = ()
+        def __init__(self, *args, **kwargs):
+            super().__init__( *args, **kwargs)
+
 class NiceCommentCreateForm(forms.ModelForm):
     class Meta:
         model = NiceComment

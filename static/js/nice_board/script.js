@@ -24,6 +24,8 @@ PageScript.ajaxPost = function (sendUrl, sendData = {}) {
         data: sendData
     })
 }
+
+
 PageScript.prototype.doneListView = function (data) {
     const siteHtml = $(data).find(this.contentElName);
     this.outputEl.empty();

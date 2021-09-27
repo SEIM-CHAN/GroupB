@@ -11,5 +11,6 @@ urlpatterns = [
     path('thread/delete/<int:pk>', views.NiceThreadDeleteView.as_view(), name='thread_delete'),
     path('<int:pk>/', views.NiceCommentListView.as_view(), name='comments'),
     path('<int:pk>/create', views.NiceCommentCreateView.as_view(), name='comment_create'),
+    path('<int:pk>/update/<int:pk2>', views.NiceCommentUpdateView.as_view(), name='comment_update'),
     path('<int:pk>/create/tool', views.NiceCommentCreateToolView.as_view(), name='comment_create_tool'),
 ]
