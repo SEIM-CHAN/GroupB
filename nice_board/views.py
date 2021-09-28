@@ -202,10 +202,9 @@ class NiceCommentUpdateView(LoginRequiredMixin, generic.UpdateView, Verification
             comment = form.save(commit=False)
             comment.user = None
             if pageAdmin and (not sameUser):
-                text = "コメントは管理者によって削除されました"
+                comment.ban = True
             else:
-                text = "コメントは削除されました"
-            comment.text = text
+                comment.text = None
             comment.save()
             messages.success(self.request, 'コメントを削除しました')
             return super().form_valid(form)
@@ -217,3 +216,6 @@ class NiceCommentUpdateView(LoginRequiredMixin, generic.UpdateView, Verification
 
     def get_success_url(self):
         return reverse_lazy('nice_board:threads')
+
+class NiceCommentUpdateBanView():
+    pass
