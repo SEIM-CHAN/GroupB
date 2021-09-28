@@ -11,16 +11,60 @@
     <div class="container">
         <div class="row">
             <div class="my-div-style">
-                <a href="#">
-                    <table border="1">
-                        <tr>
-                            <td><h4>タイトル</h4></td>
-                        </tr>
-                        <tr>
-                            <td>20XX年MM月DD日 HH:MM</td>
-                        </tr>
-                    </table>
-                </a>
+                <div class="clearfix">
+                    <a href="{% url 'board-create' %}" class="btn btn-primary float-right">
+                        新規作成
+                    </a>
+                </div>
+                <!-- １つの掲示板 -->
+                <div class="post-preview">
+                    <a href="#">
+                        <table>
+                            <tr>
+                                <td><h1>タイトル</h1></td>
+                            </tr>
+                            <tr>
+                                <td><h5>20XX年MM月DD日 HH:MM</h5></td>
+                            </tr>
+                        </table>
+                    </a>
+                </div>
+
+                <!-- ページネーション処理 -->
+                {% if is_paginated %}
+                <ul class="pagination">
+                    <!-- 前ページへのリンク -->
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a href="?page={{ page.obj.previous_page_number }}" class="page-link">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    <!-- ページ数表示 -->
+                    {% for page_num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == page_num %}
+                        <li class="page-item active">
+                            <a href="#" class="page-link">{{ page_num }}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a href="?page={{ page_num }}" class="page-link">{{ page_num }}</a>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    <!-- 前ページへのリンク -->
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a href="?page={{ page.obj.next_page_number }}" class="page-link">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+                {% endif %}
             </div>
         </div>
     </div>

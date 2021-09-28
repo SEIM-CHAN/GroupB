@@ -5,7 +5,8 @@ from . import views
 urlpatterns = [
     path('', views.ShiozakiView.as_view(), name='index'),
     path('board-list/', views.BoardListView.as_view(), name='board-list'),
-    path('board-detail/', views.BoardDetailView.as_view(), name='board-detail'),
+    path('board-detail/<int:pk>/', views.BoardDetailView.as_view(), name='board-detail'),
     path('board-create/', views.BoardCreateView.as_view(), name='board-create'),
-    path('board-update/', views.BoardUpdateView.as_view(), name='board-update'),
+    path('board-update/<int:pk>/', views.BoardUpdateView.as_view(), name='board-update'),
+    path('board-delete/<int:pk>/', views.BoardDeleteView.as_view(), name='board-delete'),
 ]

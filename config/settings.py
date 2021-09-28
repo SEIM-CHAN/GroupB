@@ -28,18 +28,18 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    #'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'ichan.apps.IchanConfig',
-    'aka.apps.AkaConfig',
-    'board.apps.BoardConfig',
-    'bba.apps.BbaConfig',
-    'nice_board.apps.NiceBoardConfig',
+    #'ichan.apps.IchanConfig',
+    #'aka.apps.AkaConfig',
+    #'board.apps.BoardConfig',
+    #'bba.apps.BbaConfig',
+    #'nice_board.apps.NiceBoardConfig',
     'shiozaki.apps.ShiozakiConfig',
     'accounts.apps.AccountsConfig',
     'django.contrib.sites',
@@ -138,3 +138,28 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+#メールアドレス認証に変更する設定
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_USERNAME_REQUIRED = False
+
+#サインアップにメールアドレス確認をはさむように設定
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_REQUIRED = True
+
+#ログイン／ログアウト後の遷移先を設定
+LOGIN_REDIRECT_URL = 'diary:diary_list'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
+
+#ログアウトリンクのクリック一発でログアウトする設定
+ACCOUNT_LOGOUT_ON_GET = True
+
+#django-allauthが送信するメールの件名に自動付与される接頭辞をブランクにする設定
+ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
+
+#デフォルトのメール送信元を設定
+DEFAULT_FROM_EMAIL = 'admin@example.com'
+
+#画像配信用
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

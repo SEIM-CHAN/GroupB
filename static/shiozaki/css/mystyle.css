@@ -12,6 +12,23 @@
     ;
 } */
 
+.board-box {
+    margin-top: 10px;
+    border: solid 8px #1abc9c;
+    border-radius: 15px;
+    padding: 8px 24px;
+}
+
 .comment-box {
     margin-top: 10px;
+    border: solid 5px #9fffea;
+    border-radius: 10px;
+    padding: 7px 20px;
+}
+
+.post-preview {
+    margin-top: 10px;
+    border: solid 5px #1abc9c;
+    border-radius: 10px;
+    padding: 7px 20px;
 }

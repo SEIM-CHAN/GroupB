@@ -12,8 +12,11 @@
     <div class="container">
         <div class="row">
             <div class="my-div-style">
+                <a href="{% url 'board-update' object.pk %}" class="btn btn-success mt-5 mb-3">編集</a>
+                <a href="{% url 'board-delete' object.pk %}" class="btn btn-danger mt-5 mb-3">削除</a>
+
                 <div class="board-box">
-                    <table border="1">
+                    <table>
                         <tr>
                             <td>
                                 <h1>タイトル</h1>
@@ -34,7 +37,7 @@
                 <strong>???件のコメント</strong>
                 
                 <div class="comment-box">
-                    <table border="1">
+                    <table>
                         <tr>
                             <td>
                                 <strong>ユーザー名</strong>
@@ -51,7 +54,7 @@
                     </table>
                 </div>
                 <div class="comment-box">
-                    <table border="1">
+                    <table>
                         <tr>
                             <td>
                                 <strong>ユーザー名</strong>
