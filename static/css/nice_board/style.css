@@ -1,9 +1,35 @@
+.masthead {
+    padding-top: 2rem;
+    padding-bottom: 6rem;
+  }
+  .masthead .masthead-heading {
+    font-size: 2.75rem;
+    line-height: 2.75rem;
+  }
+  .masthead .masthead-subheading {
+    font-size: 1.25rem;
+  }
+  .masthead .masthead-avatar {
+    width: 15rem;
+  }
 /* wrapper */
 #wrapper{
     min-width: 575px;
+    display: flex;
+    flex-flow: column;
+    min-height: 100vh;
+}
+#contents{
+    flex: 1;
 }
 /* wrapper end */
-/* thread form */
+/* comment list */
+.comment__text{
+    overflow: hidden;
+}
+/* comment list end */
+
+/* form */
 #form table tr {
     display: flex;
 }
@@ -31,4 +57,8 @@
 #id_text {
     width: 100%;
 }
-/* thread form end */
+#id_text{
+    width: 100%;
+    height: 7em;
+}
+/* form end */

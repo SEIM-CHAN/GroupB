@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block contents %}
-<div class="container">
+<div class="container mt-4">
 
     {% if thread %}
     <div class="row">
@@ -40,7 +40,7 @@
     </div>
     {% endif %}
 </div>
-<div id="contents" class="container">
+<div id="contents" class="container mt-4">
     {% for comment in comments %}
     {% if forloop.first %}
     <dl class="list-group">
@@ -67,7 +67,7 @@
 
 
             </div>
-            <dd>{{ comment.text }}</dd>
+            <dd class="comment__text">{{ comment.text | linebreaks }}</dd>
         </div>
         {% if forloop.last %}
     </dl>
@@ -78,7 +78,7 @@
     </div>
     {% endfor %}
 </div>
-<div id="commentCreateForm" class="container">
+<div id="commentCreateForm" class="container mt-4 mb-4">
 
 </div>
 {% endblock %}
@@ -87,6 +87,7 @@
     const URL_COMMENTS = "{% url 'nice_board:comments' thread.id %}";
     const URL_CREATE_COMMENT_TOOL = "{% url 'nice_board:comment_create_tool' thread.id %}";
     $(function () {
+        console.log("acttive")
         const list = new PageScript("#contents", "#contents", URL_COMMENTS);
         const form = new PageScript("#commentCreateForm", "#contents", URL_CREATE_COMMENT_TOOL);
         PageScript.ajaxGet(URL_CREATE_COMMENT_TOOL)

@@ -9,13 +9,39 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
+        type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <!-- original style -->
+    <link rel="stylesheet" href="{% static 'css/nice_board/style.css' %}">
     {% block head %}{% endblock %}
 </head>
 
 <body>
+    <!-- モーダル -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- コンテンツを動的に作成 -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Understood</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="wrapper">
         <!-- ナビゲーションバー -->
@@ -51,25 +77,6 @@
         </nav>
         <!-- ナビゲーションバー 終わり -->
 
-        <!-- モーダル -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalTitle"></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" id="modalBody">
-                        <!-- コンテンツを動的に作成 -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Understood</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         {% if messages %}
         <div>
             {% for message in messages %}
@@ -87,7 +94,7 @@
         {% block contents %}{% endblock %}
 
         <!-- footer -->
-        <footer class="footer text-center">
+        <footer id="footer" class="footer text-center">
             <div class="container">
                 <div class="row">
                     <!-- Footer Location-->
@@ -125,7 +132,7 @@
         </footer>
         <!-- Copyright Section-->
         <div class="copyright py-4 text-center text-white">
-            <div class="container"><small>Copyright &copy; Your Website 2021</small></div>
+            <div class="container"><small>Copyright &copy; Nice Board</small></div>
         </div>
         <!-- end footer -->
 
@@ -139,7 +146,7 @@
         <!-- * *                               SB Forms JS                               * *-->
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        <!-- <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script> -->
 
         <script type="text/javascript" src="{% static 'js/nice_board/script.js' %}"></script>
         {% block script %}{% endblock %}
