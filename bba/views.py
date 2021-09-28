@@ -30,12 +30,16 @@ class ThreadCreateView(LoginRequiredMixin, generic.CreateView):
         return super().form_valid(form)
     
 class CommentListView(generic.ListView):
-    model = Comment
+    model = Thread
     template_name = 'bba/comment.html'
 
-#     def get_queryset(self):
-#         comment_list = Comment.objects.all()
-#         return super().get_queryset()
+    #CommentモデルのthreadとTreadモデルのsubjectが一致したものを表示
+    def get_context_data(self, **kwargs):
+        # comment_list = Comment.objects.all()
+        context = super().get_context_data(**kwargs)
+        comment_list = Comment.objects.filter(thread=self.kwargs['pk'])
+        context['greenhouse_data_list'] = comment_list
+        return context
 
 # class CommentCreateView(generic.CreateView):
 #     pass

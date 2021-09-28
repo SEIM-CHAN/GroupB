@@ -7,7 +7,7 @@
 <body>
     <h1>掲示板だよ</h1>
     <ul>
-    {% for item in object_list %}
+    {% for item in greenhouse_data_list %}
         <li>本文：{{ item.message }}</li>
         <li>投稿日時：{{ item.created_at }}</li>
         <li>投稿者：{{ item.name }}</li>
