@@ -134,3 +134,8 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+LOGIN_REDIRECT_URL = 'bba:thread'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'bba:thread'
+
+ACCOUNT_LOGOUT_ON_GET = True

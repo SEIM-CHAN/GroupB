@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Comment, Thread
 from .forms import ThreadForm
 
@@ -16,10 +17,17 @@ class ThreadListView(generic.ListView):
         thread_list = Thread.objects.all().order_by('created_at') 
         return thread_list
 
-# class ThreadCreateView(generic.CreateView):
-#     from_class = ThreadForm
-#     temaplate_name = 'bba/thread.html'
-#     success_url = reverse_lazy('bba/thread.html')
+class ThreadCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Thread
+    form_class = ThreadForm
+    template_name = 'bba/thread_create.html'
+    success_url = reverse_lazy('bba:thread')
+
+    def form_valid(self, form):
+        thread = form.save(commit=False)
+        thread.user = self.request.user
+        thread.save()
+        return super().form_valid(form)
     
 class CommentListView(generic.ListView):
     model = Comment

@@ -7,7 +7,7 @@
 <div class="contents">
     <h4>スレッド一覧</h4>
     {% if user.is_authenticated %}
-        <a class="btn btn-primary float-right" href="#">スレッド作成</a>
+        <a class="btn btn-primary float-right" href="{% url 'bba:thread_create' %}">スレッド作成</a>
     {% else %}
     {% endif %}
     <ul>
