@@ -8,6 +8,7 @@ app_name = 'shiozaki'
 urlpatterns = [
     path('', views.ShiozakiView.as_view(), name='index'),
     path('board-list/', views.BoardListView.as_view(), name='board-list'),
+    path('your-boards/', views.YourBoardsListView.as_view(), name='your-board'),
     path('board-detail/<int:pk>/', views.BoardDetailView.as_view(), name='board-detail'),
     path('board-create/', views.BoardCreateView.as_view(), name='board-create'),
     path('board-update/<int:pk>/', views.BoardUpdateView.as_view(), name='board-update'),

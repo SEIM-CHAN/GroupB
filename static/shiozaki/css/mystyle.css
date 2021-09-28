@@ -12,6 +12,10 @@
     ;
 } */
 
+a {
+    text-decoration: none;
+}
+
 .board-box {
     margin-top: 10px;
     border: solid 8px #1abc9c;

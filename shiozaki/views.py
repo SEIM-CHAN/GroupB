@@ -22,7 +22,17 @@ class BoardListView(generic.ListView):
     paginate_by = 2
 
     def get_queryset(self):
-        threads = Thread.objects.filter(user=self.request.user).order_by('created_at')
+        threads = Thread.objects.all().order_by('created_at').reverse()
+        return threads
+
+#一覧
+class YourBoardsListView(generic.ListView):
+    model = Thread
+    template_name = 'shiozaki/board_list.html'
+    paginate_by = 2
+
+    def get_queryset(self):
+        threads = Thread.objects.filter(user=self.request.user).order_by('created_at').reverse()
         return threads
 
 #詳細

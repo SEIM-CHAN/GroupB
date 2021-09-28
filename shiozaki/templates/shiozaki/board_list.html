@@ -11,18 +11,21 @@
     <div class="container">
         <div class="row">
             <div class="my-div-style">
+                {% if user.is_authenticated %}
                 <div class="clearfix">
                     <a href="{% url 'shiozaki:board-create' %}" class="btn btn-primary float-right">
                         新規作成
                     </a>
                 </div>
-                <!-- １つの掲示板 -->
+                {% endif %}
+
                 {% for thread in thread_list %}
                 <div class="post-preview">
                     <a href="{% url 'shiozaki:board-detail' thread.pk %}">
                         <table>
                             <tr>
                                 <td><h1>{{ thread.title }}</h1></td>
+                                <td><h6>by {{ thread.user }}</h6></td>
                             </tr>
                             <tr>
                                 <td><h5>{{ thread.created_at|date }}</h5></td>
