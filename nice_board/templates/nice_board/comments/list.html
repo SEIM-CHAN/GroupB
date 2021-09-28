@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}掲示板 | 中身{% endblock %}
+{% block title %}{% if thread %}{{ thread.title }}{% endif %}{% endblock %}
 
 {% block head %}
 <style>

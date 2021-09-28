@@ -1,21 +1,30 @@
-{% extends "account/base.html" %}
+{% extends 'nice_board/_base.html' %}
 
-{% load i18n %}
+{% load static %}
 
-{% block head_title %}{% trans "Signup" %}{% endblock %}
+{% block title %}Sign Up{% endblock %}
 
-{% block content %}
-<h1>{% trans "Sign Up" %}</h1>
+{% block contents %}
+<div class="container mt-4 mb-4" id="contents">
+  <div class="d-flex justify-content-center">
+    <div class="bg-light border border-1 rounded border-primary p-5">
+      <form id="form" class="signup" method="POST" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <div class="d-flex justify-content-center flex-column mb-2 p-2">
+          <button class="btn btn-outline-primary fw-bold" type="submit">Sign up</button>
+        </div>
+        <div class="d-flex justify-content-center flex-column p-2">
+          <div class="mb-1">すでにアカウントを持っている</div>
+          <a class="mb-2 fw-bold" href="javascript: void(0)">Sign in</a>
 
-<p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
-
-<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <button type="submit">{% trans "Sign Up" %} &raquo;</button>
-</form>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

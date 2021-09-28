@@ -1,16 +1,20 @@
 .masthead {
     padding-top: 2rem;
-    padding-bottom: 6rem;
-  }
-  .masthead .masthead-heading {
+    padding-bottom: 4rem;
+    min-height: 85vh;
+}
+.masthead .masthead-heading {
     font-size: 2.75rem;
     line-height: 2.75rem;
-  }
-  .masthead .masthead-subheading {
+}
+.masthead .masthead-subheading {
     font-size: 1.25rem;
-  }
-  .masthead .masthead-avatar {
+}
+.masthead .masthead-avatar {
     width: 15rem;
+}
+.portfolio{
+    min-height: 85vh;
   }
 /* wrapper */
 #wrapper{
