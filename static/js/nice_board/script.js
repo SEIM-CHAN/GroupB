@@ -30,6 +30,10 @@ PageScript.prototype.doneListView = function (data) {
     const siteHtml = $(data).find(this.contentElName);
     this.outputEl.empty();
     this.outputEl.append(siteHtml.children());
+    const speed = 500;
+    const position = $("#footer").offset().top - $(window).height()
+    $("html, body").animate({ scrollTop: position }, speed, "swing");
+
     return data
 }
 PageScript.openModalEvent = function (SendUrl) {
@@ -62,9 +66,20 @@ PageScript.doneFormView = function (data) {
     });
     $($("#output")).append(siteHtml.children());
 }
+// PageScript.prototype.createPostData = function (data, call = () => { }) {
+//     const postData = {}
+//     $(this).find("input").each(function () {
+//         postData[$(this).attr("name")] = $(this).val()
+//     })
+//     $(this).find("textarea").each(function () {
+//         postData[$(this).attr("name")] = $(this).val()
+//     })
+//     call(postData);
+// }
 PageScript.prototype.doneCreateView = function (data, listInstans) {
     const _this = this;
     const siteHtml = $(data).find(_this.contentElName);
+    siteHtml.find("a").remove();
     siteHtml.find("form").submit(function () {
         const postData = {}
         $(this).find("input").each(function () {
@@ -73,14 +88,13 @@ PageScript.prototype.doneCreateView = function (data, listInstans) {
         $(this).find("textarea").each(function () {
             postData[$(this).attr("name")] = $(this).val()
         })
-        // _this.sendUrl = "daadd"
+
         PageScript.ajaxPost(_this.sendUrl, postData)
             .then(resp => {
                 _this.doneCreateView(resp, listInstans)
             }, resp => {
-                if (resp.status == '404') {
-                    alert("送信に失敗しました");
-                }
+                alert("送信に失敗しました");
+                _this.outputEl.appent("問題がはっせいしました")
             })
             .then(() => {
                 PageScript.ajaxGet(listInstans.sendUrl)

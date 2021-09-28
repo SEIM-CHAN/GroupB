@@ -91,7 +91,7 @@
         const list = new PageScript("#contents", "#contents", URL_COMMENTS);
         const form = new PageScript("#commentCreateForm", "#contents", URL_CREATE_COMMENT_TOOL);
         PageScript.ajaxGet(URL_CREATE_COMMENT_TOOL)
-            .then(data => form.doneCreateView(data, list));
+            .then(data => form.doneCreateView(data, list))
     });
 </script>
 {% endblock %}
