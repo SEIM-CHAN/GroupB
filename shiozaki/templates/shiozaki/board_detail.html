@@ -12,6 +12,7 @@
     <div class="container">
         <div class="row">
             <div class="my-div-style">
+
                 {% if object.user == user %}
                 <a href="{% url 'shiozaki:board-update' object.pk %}" class="btn btn-success mt-5 mb-3">編集</a>
                 <a href="{% url 'shiozaki:board-delete' object.pk %}" class="btn btn-danger mt-5 mb-3">削除</a>

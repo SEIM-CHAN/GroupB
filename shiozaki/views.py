@@ -4,7 +4,7 @@ from django.views import generic
 
 from django.contrib import messages
 
-from .models import Thread
+from .models import Thread, Comment
 
 from .forms import BoardCreateForm
 
