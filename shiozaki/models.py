@@ -1,7 +1,7 @@
 from accounts.models import CustomUser
 from django.db import models
 
-# Create your models here.
+#スレッドモデル
 class Thread(models.Model):
     user = models.ForeignKey(CustomUser, verbose_name='ユーザー', on_delete=models.PROTECT)
     title = models.CharField(verbose_name='タイトル', max_length=40)
@@ -11,6 +11,20 @@ class Thread(models.Model):
 
     class Meta:
         verbose_name_plural = 'Thread'
+    
+    def __str__(self):
+        return self.title
+
+#コメントモデル
+class Comment(models.Model):
+    user = models.ForeignKey(CustomUser, verbose_name='ユーザー', on_delete=models.PROTECT)
+    content = models.TextField(verbose_name='本文', blank=True, null=True)
+    title = models.CharField(verbose_name='タイトル', max_length=40)
+    created_at = models.DateTimeField(verbose_name='作成日時', auto_now_add=True)
+    updated_at = models.DateTimeField(verbose_name='更新日時', auto_now=True)
+
+    class Meta:
+        verbose_name_plural = 'Comment'
     
     def __str__(self):
         return self.title

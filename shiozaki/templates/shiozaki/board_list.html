@@ -25,7 +25,7 @@
                                 <td><h1>{{ thread.title }}</h1></td>
                             </tr>
                             <tr>
-                                <td><h5>20XX年MM月DD日 HH:MM {{ thread.created_at }}</h5></td>
+                                <td><h5>{{ thread.created_at|date }}</h5></td>
                             </tr>
                         </table>
                     </a>

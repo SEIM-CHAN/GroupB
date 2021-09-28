@@ -12,22 +12,24 @@
     <div class="container">
         <div class="row">
             <div class="my-div-style">
+                {% if object.user == user %}
                 <a href="{% url 'shiozaki:board-update' object.pk %}" class="btn btn-success mt-5 mb-3">編集</a>
                 <a href="{% url 'shiozaki:board-delete' object.pk %}" class="btn btn-danger mt-5 mb-3">削除</a>
+                {% endif %}
 
                 <div class="board-box">
                     <table>
                         <tr>
                             <td>
-                                <h1>タイトル</h1>
+                                <h1>{{ object.title }}</h1>
                             </td>
                             <td>
-                                <h6>作成日時：20XX/MM/DD  更新日時：20XX/MM/DD</h6>
+                                <h6>作成日時：{{ object.created_at|date }}  更新日時：{{ object.updated_at|date }}</h6>
                             </td>
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <p>本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文本文</p>
+                                <p>{{ object.content|linebreaksbr }}</p>
                             </td>
                         </tr>
                     </table>

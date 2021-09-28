@@ -16,7 +16,7 @@ class ShiozakiView(generic.TemplateView):
     template_name = 'shiozaki/index.html'
 
 #一覧
-class BoardListView(generic.TemplateView):
+class BoardListView(generic.ListView):
     model = Thread
     template_name = 'shiozaki/board_list.html'
     paginate_by = 2
@@ -26,7 +26,7 @@ class BoardListView(generic.TemplateView):
         return threads
 
 #詳細
-class BoardDetailView(LoginRequiredMixin, generic.DetailView):
+class BoardDetailView(generic.DetailView):
     model = Thread
     template_name = 'shiozaki/board_detail.html'
 
@@ -35,7 +35,7 @@ class BoardCreateView(LoginRequiredMixin, generic.CreateView):
     model = Thread
     template_name = 'shiozaki/board_create.html'
     form_class = BoardCreateForm
-    success_url = reverse_lazy('board-list')
+    success_url = reverse_lazy('shiozaki:board-list')
 
     def form_valid(self, form):
         thread = form.save(commit=False)
@@ -55,7 +55,7 @@ class BoardUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = BoardCreateForm
 
     def get_success_url(self):
-        return reverse_lazy('board-detail', kwargs={'pk': self.kwargs['pk']})
+        return reverse_lazy('shiozaki:board-detail', kwargs={'pk': self.kwargs['pk']})
     
     def form_valid(self, form):
         messages.success(self.request, "掲示板を更新しました。")
@@ -69,7 +69,7 @@ class BoardUpdateView(LoginRequiredMixin, generic.UpdateView):
 class BoardDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Thread
     template_name = 'shiozaki/board_delete.html'
-    success_url = reverse_lazy('board-list')
+    success_url = reverse_lazy('shiozaki:board-list')
 
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, "掲示板を削除しました。")
