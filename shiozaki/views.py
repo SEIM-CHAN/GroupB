@@ -8,8 +8,6 @@ from .models import Thread
 
 from .forms import BoardCreateForm
 
-from .models import Thread
-
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -17,23 +15,38 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class ShiozakiView(generic.TemplateView):
     template_name = 'shiozaki/index.html'
 
+#一覧
 class BoardListView(generic.TemplateView):
     model = Thread
     template_name = 'shiozaki/board_list.html'
     paginate_by = 2
 
     def get_queryset(self):
-        threads = Thread.objects.filter(user=self.request.user).order_by('created-at')
+        threads = Thread.objects.filter(user=self.request.user).order_by('created_at')
         return threads
 
-class BoardDetailView(generic.TemplateView):
+#詳細
+class BoardDetailView(LoginRequiredMixin, generic.DetailView):
     model = Thread
     template_name = 'shiozaki/board_detail.html'
 
-class BoardCreateView(generic.CreateView):
+#作成
+class BoardCreateView(LoginRequiredMixin, generic.CreateView):
     model = Thread
     template_name = 'shiozaki/board_create.html'
     form_class = BoardCreateForm
+    success_url = reverse_lazy('board-list')
+
+    def form_valid(self, form):
+        thread = form.save(commit=False)
+        thread.user = self.request.user
+        thread.save()
+        messages.success(self.request, "掲示板を作成しました。")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "掲示板の作成に失敗しました。")
+        return super().form_invalid(form)
 
 #更新
 class BoardUpdateView(LoginRequiredMixin, generic.UpdateView):

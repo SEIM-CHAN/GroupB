@@ -12,23 +12,27 @@
         <div class="row">
             <div class="my-div-style">
                 <div class="clearfix">
-                    <a href="{% url 'board-create' %}" class="btn btn-primary float-right">
+                    <a href="{% url 'shiozaki:board-create' %}" class="btn btn-primary float-right">
                         新規作成
                     </a>
                 </div>
                 <!-- １つの掲示板 -->
+                {% for thread in thread_list %}
                 <div class="post-preview">
-                    <a href="#">
+                    <a href="{% url 'shiozaki:board-detail' thread.pk %}">
                         <table>
                             <tr>
-                                <td><h1>タイトル</h1></td>
+                                <td><h1>{{ thread.title }}</h1></td>
                             </tr>
                             <tr>
-                                <td><h5>20XX年MM月DD日 HH:MM</h5></td>
+                                <td><h5>20XX年MM月DD日 HH:MM {{ thread.created_at }}</h5></td>
                             </tr>
                         </table>
                     </a>
                 </div>
+                {% empty %}
+                <p>掲示板がありません。</p>
+                {% endfor %}
 
                 <!-- ページネーション処理 -->
                 {% if is_paginated %}

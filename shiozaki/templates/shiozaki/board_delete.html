@@ -15,7 +15,7 @@
                     {% csrf_token %}
                     <p>本当に削除しますか？</p>
                     <button class="btn btn-primary mt-5" type="submit">削除</button>
-                    <a class="btn btn-secondary mt-5 ml-2" href="{% url 'board-detail' %}">キャンセル</a>
+                    <a class="btn btn-secondary mt-5 ml-2" href="{% url 'shiozaki:board-detail' %}">キャンセル</a>
                 </form>
             </div>
         </div>
