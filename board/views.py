@@ -82,6 +82,30 @@ class ComentCreateView(LoginRequiredMixin,generic.CreateView):
         messages.error(self.request,'コメントの作成に失敗しました。')
         return super().form_invalid(form)
 
+class BoardUpdateView(LoginRequiredMixin,generic.UpdateView):
+    model = Board
+    template_name = 'board/board_update.html'
+    form_class = BoardCreateForm
+
+    def get_success_url(self):
+        return reverse_lazy('board:board_detail',kwargs={'pk': self.kwargs['pk']})
+
+    def form_valid(self, form):
+        messages.success(self.request,'スレッドを更新しました。')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.reqest,"スレッドの更新に失敗しました。")
+        return super().form_invalid(form)
+
+class BoardDeleteView(LoginRequiredMixin,generic.DeleteView):
+    model = Board
+    template_name = 'board/board_delete.html'
+    success_url = reverse_lazy('board:board_list')
+
+    def delete(self,request,*args,**kwargs):
+        messages.success(self.request,"スレッドを削除しました。")
+        return super().delete(request,*args,**kwargs)
 
 
 

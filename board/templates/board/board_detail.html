@@ -74,7 +74,7 @@
         </div>
     </div>
 </section>
-<a href="{% url 'board:coment_create' board.id %}">新規作成</a>
+<a class="btn btn-primary" href="{% url 'board:coment_create' board.id %}">コメント新規作成</a>
 <br>
 
 <strong>スレッド</strong>
@@ -95,6 +95,7 @@
 {% empty %}
     <p>メッセージがありません</p>
 {% endfor %}
-
+<a class="btn btn-success mt-5 mb-3" href="{% url 'board:board_update' board.id %}">編集</a>
+<a class="btn btn-success mt-5 mb-3" href="{% url 'board:board_delete' board.id %}">削除</a>
 {% endblock %}
 

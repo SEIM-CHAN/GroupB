@@ -74,18 +74,11 @@
         </div>
     </div>
 </section>
-<h1>スレッド一覧</h1>
-<a class="btn btn-primary" href="{% url 'board:board_create' %}">スレッド新規作成</a>
-{% for board in board_list %}
-    <a href="{% url 'board:board_detail' board.pk %}">
-        <h2>
-            {{ board.title }}
-        </h2>
-    </a>
-    <p>{{ board.created_at }}</p>
-{% empty %}
-    <p>スレッドがありません</p>
-{% endfor %}
-
+<form method="POST">
+    {% csrf_token %}
+    <p>本当に削除しますか？</p>
+    <button class="btn btn-primary" type="submit">削除</button>
+    <a class="btn btn-secondary ml-2" href="{% url 'board:board_detail' object.pk %}">キャンセル</a>
+</form>
 
 {% endblock %}
