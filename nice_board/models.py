@@ -23,7 +23,7 @@ class NiceComment(models.Model):
 
     user = models.ForeignKey(CustomUser, verbose_name='ユーザー',blank=True, null=True, on_delete=models.SET_NULL)
     nice_thread = models.ForeignKey(NiceThread, verbose_name='スレッド', on_delete=models.CASCADE)
-    text = models.TextField(verbose_name='コメント', null=True, max_length=250)
+    text = models.TextField(verbose_name='コメント', blank=True, max_length=250)
     ban = models.BooleanField(verbose_name='コメントアウト' ,default=False)
     created_at = models.DateTimeField(verbose_name='作成日時', auto_now_add=True)
 

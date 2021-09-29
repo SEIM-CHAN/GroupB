@@ -17,8 +17,9 @@ class NiceCommentUpdateForm(forms.ModelForm):
             super().__init__( *args, **kwargs)
 
 class NiceCommentCreateForm(forms.ModelForm):
+    text = forms.CharField(label='コメント', required=True, widget=forms.Textarea)
     class Meta:
         model = NiceComment
-        fields = ('text',)
+        fields = ()
         def __init__(self, *args, **kwargs):
             super().__init__( *args, **kwargs)

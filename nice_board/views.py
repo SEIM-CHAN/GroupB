@@ -156,6 +156,10 @@ class NiceCommentCreateView(generic.CreateView):
             comment.user = None
         else:
             comment.user =  self.request.user
+            
+        if comment.text == "":
+            return self.form_invalid(form)
+            
         comment.nice_thread = NiceThread.objects.filter(id=self.kwargs['pk']).first()
         comment.save()
         messages.success(self.request, 'スレッドを作成しました')
@@ -215,7 +219,7 @@ class NiceCommentUpdateView(LoginRequiredMixin, generic.UpdateView, Verification
         return super().form_invalid(form)
 
     def get_success_url(self):
-        return reverse_lazy('nice_board:threads')
+        return reverse_lazy('nice_board:comments', self.kwargs['pk2'])
 
-class NiceCommentUpdateBanView():
+class NiceCommentUpdateBanView(NiceCommentUpdateView):
     pass
