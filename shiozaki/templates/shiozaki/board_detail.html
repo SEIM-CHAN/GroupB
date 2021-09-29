@@ -37,31 +37,41 @@
                 </div>
 
                 <hr>
+                {% if user.is_authenticated %}
                 <a href="{% url 'shiozaki:comment-create' object.pk %}" class="btn btn-primary mt-5 mb-3">コメントを送信する</a>
+                {% endif %}
+
+                <!-- foreachでコメントを表示 -->
+                {% for comment in object.comments %}
+                {% if object.pk == comment.title %}
                 <div class="comment-box">
                     <table>
                         <tr>
                             <td>
-                                <strong>ユーザー名</strong>
+                                <strong>{{ comment.user }}</strong>
                             </td>
                             <td>
-                                20XX/MM/DD HH:MM:SS
+                                {{ comment.updated_at }}
                             </td>
-                            <td>
-                                
-                                <a href="{% url 'shiozaki:comment-update' object.pk object.pk %}" class="btn btn-success mt-5 mb-3">編集</a>
-                                <a href="{% url 'shiozaki:comment-delete' object.pk object.pk %}" class="btn btn-danger mt-5 mb-3">削除</a>
-                                
-                            </td>
+                            <!-- <td rowspan="2"> -->
+                                <!-- if user == comment.user -->
+                                <!-- <a href="" class="btn btn-success mt-5 mb-3">編集</a> -->
+                                <!-- <a href="" class="btn btn-danger mt-5 mb-3">削除</a> -->
+                                <!-- endif -->
+                            <!-- </td> -->
                         </tr>
                         <tr>
                             <td colspan="2">
-                                ほげぴよほげぴよ
+                                {{ comment.content }}
                             </td>
                         </tr>
                     </table>
                 </div>
+                {% endif %}
+
+                {% empty %}
                 <p>コメントはありません。</p>
+                {% endfor %}
             </div>
         </div>
     </div>

@@ -96,12 +96,20 @@ class CommentCreateView(LoginRequiredMixin, generic.CreateView):
     model = Comment
     template_name = 'shiozaki/comment_create.html'
     form_class = CommentCreateForm
-    success_url = reverse_lazy('shiozaki:board-detail')
+
+    def get_success_url(self):
+        return reverse_lazy('shiozaki:board-detail', kwargs={'pk': self.kwargs['pk']})
 
     def form_valid(self, form):
+        print(self.kwargs['pk'])
+
         comment = form.save(commit=False)
         comment.user = self.request.user
+        comment.title = self.kwargs['pk']
         comment.save()
+
+        Thread.addComments(Thread, comment)
+
         messages.success(self.request, "コメントを送信しました。")
         return super().form_valid(form)
 
@@ -109,29 +117,29 @@ class CommentCreateView(LoginRequiredMixin, generic.CreateView):
         messages.error(self.request, "コメントの送信に失敗しました。")
         return super().form_invalid(form)
 
-#コメント更新
-class CommentUpdateView(LoginRequiredMixin, generic.UpdateView):
-    model = Comment
-    template_name = 'shiozaki/board_update.html'
-    form_class = CommentCreateForm
+# #コメント更新
+# class CommentUpdateView(LoginRequiredMixin, generic.UpdateView):
+#     model = Comment
+#     template_name = 'shiozaki/board_update.html'
+#     form_class = CommentCreateForm
 
-    def get_success_url(self):
-        return reverse_lazy('shiozaki:board-detail', kwargs={'pk': self.kwargs['pk']})
+#     def get_success_url(self):
+#         return reverse_lazy('shiozaki:board-detail', kwargs={'pk': self.kwargs['pk']})
     
-    def form_valid(self, form):
-        messages.success(self.request, "コメントを更新しました。")
-        return super().form_valid(form)
+#     def form_valid(self, form):
+#         messages.success(self.request, "コメントを更新しました。")
+#         return super().form_valid(form)
     
-    def form_invalid(self, form):
-        messages.error(self.request, "コメントの更新に失敗しました。")
-        return super().form_invalid(form)
+#     def form_invalid(self, form):
+#         messages.error(self.request, "コメントの更新に失敗しました。")
+#         return super().form_invalid(form)
 
-#コメント削除
-class CommentDeleteView(LoginRequiredMixin, generic.DeleteView):
-    model = Comment
-    template_name = 'shiozaki/board_delete.html'
-    success_url = reverse_lazy('shiozaki:board-detail')
+# #コメント削除
+# class CommentDeleteView(LoginRequiredMixin, generic.DeleteView):
+#     model = Comment
+#     template_name = 'shiozaki/board_delete.html'
+#     success_url = reverse_lazy('shiozaki:board-detail')
 
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, "コメントを削除しました。")
-        return super().delete(request, *args, **kwargs)
+#     def delete(self, request, *args, **kwargs):
+#         messages.success(self.request, "コメントを削除しました。")
+#         return super().delete(request, *args, **kwargs)

@@ -18,8 +18,8 @@ urlpatterns = [
 
     #コメント
     path('comment-create/<int:pk>/', views.CommentCreateView.as_view(), name='comment-create'),
-    path('comment-update/<int:bk>/<int:pk>/', views.CommentUpdateView.as_view(), name='comment-update'),
-    path('comment-delete/<int:bk>/<int:pk>/', views.CommentDeleteView.as_view(), name='comment-delete'),
+    # path('comment-update/<int:bk>/<int:pk>/', views.CommentUpdateView.as_view(), name='comment-update'),
+    # path('comment-delete/<int:bk>/<int:pk>/', views.CommentDeleteView.as_view(), name='comment-delete'),
 
     #認証機能
     path('accounts/', include('allauth.urls')),
