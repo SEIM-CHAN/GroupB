@@ -23,7 +23,6 @@
             <ul class="row">
                 <li class="col-12">作成者<span>{{ thread.user }}</span></li>
                 <li class="col-12">作成日時<span>{{ thread.created_at }}</span></li>
-                <li class="col-12">最終更新日時<span>{{ thread.created_at }}</span></li>
             </ul>
         </div>
     </div>
@@ -58,11 +57,11 @@
                 <dd class="comment__user ms-3 h5">削除されました</dd>
                 {% endif%}
                 <dd class="ms-3 h5">{{ comment.created_at }}</dd>
-                {% if not user.is_anonymous %}
+                {% if not user.is_anonymous and comment.text %}
                 <div class="ms-auto">
                     {% if thread.user.id == user.id or comment.user.id == user.id %}
                     <a class="btn btn-outline-danger btn-sm"
-                        href="{% url 'nice_board:comment_update' thread.id comment.id %}">削除</a>
+                        href="{% url 'nice_board:comment_update' thread.id comment.id %}" data-modal="">削除</a>
                     {% endif %}
 
                 </div>
@@ -100,7 +99,84 @@
         const list = new PageScript("#contents", "#contents", URL_COMMENTS);
         const form = new PageScript("#commentCreateForm", "#contents", URL_CREATE_COMMENT_TOOL);
         PageScript.ajaxGet(URL_CREATE_COMMENT_TOOL)
-            .then(data => form.doneCreateView(data, list), resp => { alert("error ページ遷移で投稿してください") })
+            .then(data => {
+                function doneCreateView(resp, listInstans) {
+                    const siteHtml = $(data).find(form.contentElName);
+                    siteHtml.find("a").remove();
+                    console.log(siteHtml.find("form"))
+                    siteHtml.find("form").submit(function () {
+                        const postData = {}
+                        $(this).find("input").each(function () {
+                            postData[$(this).attr("name")] = $(this).val()
+                        })
+                        $(this).find("textarea").each(function () {
+                            postData[$(this).attr("name")] = $(this).val()
+                        })
+
+                        PageScript.ajaxPost(form.sendUrl, postData)
+                            .then(resp2 => {
+                                doneCreateView(resp2, listInstans)
+                            }, resp2 => {
+                                alert("送信に失敗しました");
+                                form.outputEl.appent("問題がはっせいしました")
+                            })
+                            .then(() => {
+                                PageScript.ajaxGet(listInstans.sendUrl)
+                                    .then(resp2 => {
+                                        listInstans.doneListView(resp2);
+                                        $("a[data-modal]").click(modalAction)
+                                    })
+                            })
+                        return false
+                    });
+                    form.outputEl.empty();
+                    form.outputEl.append(siteHtml.children());
+                }
+                doneCreateView(data, list)
+            }, resp => { alert("error 投稿はページ遷移で投稿してください") });
+
+        const URL_MANAGE = "{% url 'nice_board:thread_manage' %}"
+        const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), {
+            keyboard: false
+        })
+
+        const modal = new PageScript("#modalBody", "#contents", "");
+        function modalAction() {
+            event.stopPropagation();
+            modal.sendUrl = $(this).attr('href');
+            PageScript.ajaxGet(modal.sendUrl)
+                .then(data => {
+                    myModal.toggle();
+                    const _this = this;
+                    const siteHtml = $(data).find(modal.contentElName);
+                    siteHtml.find("form").submit(function () {
+                        const postData = {}
+                        $(this).find("input").each(function () {
+                            postData[$(this).attr("name")] = $(this).val()
+                        })
+                        $(this).find("textarea").each(function () {
+                            postData[$(this).attr("name")] = $(this).val()
+                        })
+                        PageScript.ajaxPost(modal.sendUrl, postData)
+                            .then(data => {
+                                PageScript.ajaxGet(URL_COMMENTS)
+                                    .then(data => {
+                                        list.doneListView(data)
+                                        myModal.toggle();
+                                        $("a[data-modal]").click(modalAction);
+                                    })
+                            },
+                                resp => { })
+                        return false
+                    });
+                    $(modal.outputEl).empty();
+                    $(modal.outputEl).append(siteHtml.children());
+                }, resp => {
+                    console.log("huga")
+                })
+            return false
+        }
+        $("a[data-modal]").click(modalAction)
     });
 </script>
 {% endblock %}

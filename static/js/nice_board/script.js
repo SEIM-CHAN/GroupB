@@ -1,7 +1,4 @@
 "use strict"
-const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), {
-    keyboard: false
-})
 const PageScript = function PageScript(outputElName, contentElName, sendUrl) {
     this.outputEl = $(outputElName)
     this.contentElName = contentElName
@@ -52,20 +49,24 @@ PageScript.openModalEvent = function (SendUrl) {
 //         return false
 //     })
 // }
-PageScript.doneFormView = function (data) {
-    console.error("done")
-    const siteHtml = $(data).find("#contents");
-    siteHtml.find("form").submit(function () {
-        const data = {}
-        $(this).find("input").each(function () {
-            data[$(this).attr("name")] = $(this).val()
-        })
-        PageScript.ajaxPost(URL_NICE_BOARD_THREADS, data)
-            .then(() => { console.log("send") })
-        return false
-    });
-    $($("#output")).append(siteHtml.children());
-}
+// PageScript.prototype.doneFormView = function (data) {
+//     const _this = this;
+//     const siteHtml = $(data).find("#contents");
+//     siteHtml.find("form").submit(function () {
+//         const postData = {}
+//         $(this).find("input").each(function () {
+//             postData[$(this).attr("name")] = $(this).val()
+//         })
+//         $(this).find("textarea").each(function () {
+//             postData[$(this).attr("name")] = $(this).val()
+//         })
+//         PageScript.ajaxPost(_this.sendUrl, postData)
+//             .then(() => { console.log("send") })
+//         return false
+//     });
+//     $(_this.outputEl).empty();
+//     $(_this.outputEl).append(siteHtml.children());
+// }
 // PageScript.prototype.createPostData = function (data, call = () => { }) {
 //     const postData = {}
 //     $(this).find("input").each(function () {
