@@ -24,7 +24,11 @@
     {% for item in object_list %}
         <li>本文：{{ item.message }}</li>
         <li>投稿日時：{{ item.created_at }}</li>
-        <li>投稿者：{{ item.name }}</li></br>
+        <li>投稿者：{{ item.name }}</li>
+        {% if user == item.user %}
+        <a href="{% url 'bba:comment_update' item.pk %}">更新</a>
+        {% endif %}
+        </br></br>
     {% endfor %}
     </ul>
 </div>
