@@ -40,28 +40,31 @@ class CommentListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        comment_list = Comment.objects.filter(thread=self.kwargs['pk'])
-        context['greenhouse_data_list'] = comment_list
+        context.update({
+            'thread': Thread.objects.filter(id=self.kwargs['pk']).first(),
+        })
         return context
+
+    def get_queryset(self):
+        comments = Comment.objects.filter(thread_id=self.kwargs['pk']).order_by('-created_at')
+        return comments
 
 class CommentCreateView(LoginRequiredMixin, generic.CreateView):
     model = Comment
     form_class = CommentForm
     template_name = 'bba/comment_create.html'
-    success_url = reverse_lazy('bba:thread')
+    success_url = reverse_lazy('bba:comment')
 
     # def get_return_link(request):
     #     # top_page = resolve_url('diary:top')  # 最新の日記一覧
     #     referer = request.environ.get('HTTP_REFERER')  # これが、前ページのURL
     #     return refer
-
+    def get_success_url(self):
+        return reverse('bba:comment', kwargs={'pk': self.kwargs['pk']})
 
     def form_valid(self, form):
-        thread = form.save(commit=False)
-        thread.user = self.request.user
-        thread.save()
+        object = form.save(commit=False)
+        object.user = self.request.user
+        object.thread =Thread.objects.filter(id=self.kwargs['pk']).first()
+        object.save()
         return super().form_valid(form)
-
-    # def get_success_url(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     return reverse('bba:comment', kwargs={'pk': self.kwargs['pk']})

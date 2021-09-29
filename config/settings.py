@@ -9,8 +9,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from django.contrib.messages import constants as messages
-import pymysql
-pymysql.install_as_MySQLdb()
+# import pymysql
+# pymysql.install_as_MySQLdb()
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -86,16 +86,16 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dbtest',
-        'USER': 'testuser',
-        'PASSWORD': 'testpass',
-        'HOST': 'database-1.cu3i1xfq5qsf.us-east-1.rds.amazonaws.com',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'dbtest',
+    #     'USER': 'testuser',
+    #     'PASSWORD': 'testpass',
+    #     'HOST': 'database-1.cu3i1xfq5qsf.us-east-1.rds.amazonaws.com',
+    #     'PORT': '3306',
     }
 }
 

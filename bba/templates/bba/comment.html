@@ -17,11 +17,11 @@
 <div class="contents">
     <h1>掲示板だよ</h1>
     {% if user.is_authenticated %}
-        <a class="btn btn-primary float-right" href="{% url 'bba:comment_create' %}">コメント作成</a>
+        <a class="btn btn-primary float-right" href="{% url 'bba:comment_create' thread.pk %}">コメント作成</a>
     {% else %}
     {% endif %}
     <ul>
-    {% for item in greenhouse_data_list %}
+    {% for item in object_list %}
         <li>本文：{{ item.message }}</li>
         <li>投稿日時：{{ item.created_at }}</li>
         <li>投稿者：{{ item.name }}</li></br>
