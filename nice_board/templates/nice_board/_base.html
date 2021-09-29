@@ -48,7 +48,7 @@
         <nav class="navbar navbar-expand-lg bg-secondary sticky-top" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href="{% url 'nice_board:index' %}">BOARD'S SO COOL</a>
-                <div class="text-white ms-auto">{% if user.is_authenticated %}こんにちは<br>
+                <div class="text-white ms-auto">{% if user.is_authenticated %}こんにちは
                     <span class="fw-bold">{{ user }}</span>さん{% endif %}
                 </div>
                 <button class="navbar-toggler text-uppercase fw-bold bg-primary text-white rounded ms-2" type="button"
@@ -60,21 +60,20 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item mx-0 mx-lg-1">
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded"
-                                href="{% url 'nice_board:threads' %}">新着スレッド</a>
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded" href="{% url 'nice_board:threads' %}">新着</a>
                         </li>
                         {% if user.is_authenticated %}
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
                                 href="{% url 'nice_board:thread_create' %}">スレッド作成</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
-                                href="{% url 'nice_board:thread_manage' %}">スレッド管理</a></li>
+                                href="{% url 'nice_board:thread_manage' %}">管理</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
-                                href="{% url 'account_logout' %}">ログアウト</a></li>
+                                href="{% url 'account_logout' %}">SIGNOUT</a></li>
                         {% else %}
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
-                                href="{% url 'account_signup' %}">サインアップ</a></li>
+                                href="{% url 'account_signup' %}">SIGN UP</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
-                                href="{% url 'account_login' %}">ログイン</a></li>
+                                href="{% url 'account_login' %}">LOGIN</a></li>
                         {% endif %}
                     </ul>
                 </div>
