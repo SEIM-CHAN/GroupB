@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 class Thread(models.Model):
@@ -16,3 +17,7 @@ class Comment(models.Model):
     def __str__(self):
         title = str(self.thread) + "/" + str(self.created_at)
         return title
+
+    def get_absolute_url(self):
+    # get_absolute_urlで遷移先を指定
+        return reverse("bba:comment", args={self.pk})
