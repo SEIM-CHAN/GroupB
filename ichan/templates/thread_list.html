@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<header class=" text-center">
+    <div class="container d-flex mt-2 flex-column">
+      <div class="row">
+       <div class="sample">
+       <h1 style="color:black;">スレッド一覧</h1>
+       {% if user.is_authenticated %}
+           <a class="btn btn-primary" href="{% url 'thread_create' %}">スレッド作成</a>
+       {% endif %}
+       </div>
+      </div> 
+    </div>
+    <div class="list">
+      <table class="table w-800 mr-auto ml-auto">
+        <thead class="thead-light ">
+         <tr>
+           <th>ID</th><th>タイトル</th><th>投稿日時</th>
+         </tr>
+        </thead>
+        <tbody>
+
+          {% for thread in threadList %}
+            <tr>
+              <td class='w-10'>{{ thread.id }}</td>
+              <td><a href="{% url 'comment' thread.id %}">{{ thread.title|truncatechars:20 }}</a></td>
+              <td>{{ thread.created_at }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td>スレッドはまだありません</td>
+              <td>スレッドはまだありません</td>
+              <td>スレッドはまだありません</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+</header>
+{% endblock %}
+
+{% block centents %}
+<div class="bs-dark">
+  <p>スレッドはまだありません</p>
+</div>
+{% endblock  %}

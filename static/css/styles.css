@@ -86,6 +86,9 @@ body {
   background-color: var(--bs-body-bg);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
 }
 
 hr {
@@ -6928,7 +6931,12 @@ textarea.form-control-lg {
 .border-5 {
   border-width: 5px !important;
 }
-
+.w-10 {
+  width: 100px;
+}
+.w-800 {
+  width: 800px;
+}
 .w-25 {
   width: 25% !important;
 }
@@ -7285,6 +7293,10 @@ textarea.form-control-lg {
 .my-auto {
   margin-top: auto !important;
   margin-bottom: auto !important;
+}
+
+.mt-100 {
+  margin-top: 100px;
 }
 
 .mt-0 {

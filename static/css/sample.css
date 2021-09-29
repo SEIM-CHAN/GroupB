@@ -1,0 +1,34 @@
+body {
+    margin: 0;
+    display: flex;
+    flex-flow: column;
+    min-height: 100vh;
+}
+header {
+    flex: 1;    
+}
+/* .masthead {
+    padding: 0%;
+    padding-top: 10px;
+} */
+
+.contents {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+.sample {
+    margin-top:6rem;
+}
+
+.mr-auto {
+    margin-right: auto;
+}
+
+.ml-auto {
+    margin-left: auto;
+}
+
+footer {
+    margin-top: auto;
+}
