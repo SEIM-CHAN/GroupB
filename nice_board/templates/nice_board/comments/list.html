@@ -48,27 +48,21 @@
         <div class="list-group-item list-group-item-wite">
             <div class="d-flex">
                 <dt class="comment__number h5">{{ forloop.counter }}</dt>
-                {% if comment.user %}
-                {% if not comment.user.is_anonymous %}
-                <dd class="comment__user ms-3 h5">{{ comment.user }}</dd>
-                {% else %}
+                {% if comment.text %}
+                {% if not comment.user %}
                 <dd class="comment__user ms-3 h5">名無し</dd>
+                {% else %}
+                <dd class="comment__user ms-3 h5">{{ comment.user }}</dd>
                 {% endif %}
                 {% else %}
                 <dd class="comment__user ms-3 h5">削除されました</dd>
                 {% endif%}
                 <dd class="ms-3 h5">{{ comment.created_at }}</dd>
                 {% if not user.is_anonymous %}
-                <div>
-                    {% if comment.user.id == user.id %}
-                    <a class="ms-auto btn btn-outline-danger btn-sm"
+                <div class="ms-auto">
+                    {% if thread.user.id == user.id or comment.user.id == user.id %}
+                    <a class="btn btn-outline-danger btn-sm"
                         href="{% url 'nice_board:comment_update' thread.id comment.id %}">削除</a>
-                    {% endif %}
-                    {% if thread.user.id == user.id %}
-                    <a class="ms-auto btn btn-outline-danger btn-sm"
-                        href="{% url 'nice_board:comment_update' thread.id comment.id %}">
-                        {% if comment.ban %}表示する{% else %}非表示にする{% endif %}
-                    </a>
                     {% endif %}
 
                 </div>
@@ -76,7 +70,7 @@
 
 
             </div>
-            {% if not comment.user %}
+            {% if not comment.text %}
             <dd class="comment__text">投稿は削除されました</dd>
             {% elif comment.ban %}
             <dd class="comment__text">管理者が非表示にしました</dd>
@@ -94,7 +88,7 @@
     {% endfor %}
 </div>
 <div id="commentCreateForm" class="container mt-4 mb-4">
-
+    <a href="btn btn-primary">投稿</a>
 </div>
 {% endblock %}
 {% block script %}
@@ -106,7 +100,7 @@
         const list = new PageScript("#contents", "#contents", URL_COMMENTS);
         const form = new PageScript("#commentCreateForm", "#contents", URL_CREATE_COMMENT_TOOL);
         PageScript.ajaxGet(URL_CREATE_COMMENT_TOOL)
-            .then(data => form.doneCreateView(data, list))
+            .then(data => form.doneCreateView(data, list), resp => { alert("error ページ遷移で投稿してください") })
     });
 </script>
 {% endblock %}

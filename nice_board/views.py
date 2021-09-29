@@ -17,6 +17,7 @@ class Verification():
         """リクエストユーザーとスレッドユーザーの検証"""
         if id is None:
             id = self.kwargs['pk']
+        print("huga1")
         target = NiceThread.objects.filter(id=id).first()
         return (not target is None) and (target.user.id == self.request.user.id)
     
@@ -24,6 +25,7 @@ class Verification():
         """リクエストユーザーとコメントユーザーの検証"""
         if id is None:
             id = self.kwargs['pk']
+        print("huga2")
         target = NiceComment.objects.filter(id=id).first()
         return (not target is None) and ((not target.user is None) and (target.user.id == self.request.user.id))
 
@@ -182,7 +184,7 @@ class NiceCommentUpdateView(LoginRequiredMixin, generic.UpdateView, Verification
     """コメント削除"""
     template_name = 'nice_board/comments/update.html'
     model = NiceComment
-    form_class = NiceCommentCreateForm
+    form_class = NiceCommentUpdateForm
     pk_url_kwarg = 'pk2'
 
     def get(self, request, *args, **kwargs):
@@ -205,10 +207,7 @@ class NiceCommentUpdateView(LoginRequiredMixin, generic.UpdateView, Verification
         if pageAdmin or sameUser:
             comment = form.save(commit=False)
             comment.user = None
-            if pageAdmin and (not sameUser):
-                comment.ban = True
-            else:
-                comment.text = None
+            comment.text = None
             comment.save()
             messages.success(self.request, 'コメントを削除しました')
             return super().form_valid(form)
@@ -219,7 +218,7 @@ class NiceCommentUpdateView(LoginRequiredMixin, generic.UpdateView, Verification
         return super().form_invalid(form)
 
     def get_success_url(self):
-        return reverse_lazy('nice_board:comments', self.kwargs['pk2'])
+        return reverse('nice_board:comments', kwargs={'pk': self.kwargs['pk']})
 
 class NiceCommentUpdateBanView(NiceCommentUpdateView):
     pass

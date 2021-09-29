@@ -20,6 +20,6 @@ class NiceCommentCreateForm(forms.ModelForm):
     text = forms.CharField(label='コメント', required=True, widget=forms.Textarea)
     class Meta:
         model = NiceComment
-        fields = ()
+        fields = ('text',)
         def __init__(self, *args, **kwargs):
             super().__init__( *args, **kwargs)
