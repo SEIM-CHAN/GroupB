@@ -12,8 +12,13 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
-class ShiozakiView(generic.TemplateView):
+class ShiozakiView(generic.ListView):
+    model = Thread
     template_name = 'shiozaki/index.html'
+
+    def get_queryset(self):
+        threads = Thread.objects.all().order_by('created_at').reverse()
+        return threads
 
 #一覧
 class BoardListView(generic.ListView):
