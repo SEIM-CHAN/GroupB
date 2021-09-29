@@ -94,7 +94,7 @@ class BoardDeleteView(LoginRequiredMixin, generic.DeleteView):
 #コメント作成
 class CommentCreateView(LoginRequiredMixin, generic.CreateView):
     model = Comment
-    template_name = 'shiozaki/board_create.html'
+    template_name = 'shiozaki/comment_create.html'
     form_class = CommentCreateForm
     success_url = reverse_lazy('shiozaki:board-detail')
 
