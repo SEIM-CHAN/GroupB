@@ -1,0 +1,19 @@
+.contents {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sample {
+    margin-top:6rem;
+}
+
+.mr-auto {
+    margin-right: auto;
+}
+
+.ml-auto {
+    margin-left: auto;
+}
+
+
