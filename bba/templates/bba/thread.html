@@ -13,6 +13,10 @@
     <ul>
         {% for item in thread_list %}
             <li><a href="{% url 'bba:comment' item.pk %}">{{ item }}</a></li>
+            {% if user == item.user %}
+                <a href="{% url 'bba:thread_delete' item.pk %}">削除</a>
+            {% endif %}
+            </br>
         {% endfor %}
     </ul>
 </div>

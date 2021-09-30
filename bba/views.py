@@ -21,6 +21,10 @@ class ThreadListView(generic.ListView):
     def get_queryset(self):
         thread_list = Thread.objects.all().order_by('created_at') 
         return thread_list
+    
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        return user
 
 class ThreadCreateView(LoginRequiredMixin, generic.CreateView):
     model = Thread
@@ -34,6 +38,14 @@ class ThreadCreateView(LoginRequiredMixin, generic.CreateView):
         thread.save()
         return super().form_valid(form)
     
+class ThreadDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Thread
+    template_name = 'bba/thread_delete.html'
+    success_url = reverse_lazy('bba:thread')
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
 class CommentListView(generic.ListView):
     model = Thread
     template_name = 'bba/comment.html'
