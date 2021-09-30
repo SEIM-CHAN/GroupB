@@ -17,3 +17,12 @@
 }
 
 
+
+.footer{
+
+
+    bottom: 0; /*下に固定*/
+}
+.mt-120{
+    margin-top: 120px;
+}

@@ -9,10 +9,10 @@ from django.contrib import messages
 
 # Create your views here.
 
-class BoardView(generic.TemplateView):
+class IndexViews(generic.TemplateView):
     template_name = "board/index.html"
 
-class BoardListView(LoginRequiredMixin,generic.ListView):
+class BoardListView(generic.ListView):
     model = Board
     template_name = 'board_list.html'
 
@@ -20,7 +20,11 @@ class BoardListView(LoginRequiredMixin,generic.ListView):
         boards = Board.objects.all().order_by('-created_at')
         return boards
 
-class BoardDetailView(LoginRequiredMixin,generic.ListView):
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        return user
+
+class BoardDetailView(generic.ListView):
     model = Coment
     template_name = 'board/board_detail.html'
     
@@ -34,6 +38,10 @@ class BoardDetailView(LoginRequiredMixin,generic.ListView):
     def get_queryset(self):
         coments = Coment.objects.filter(board_id=self.kwargs['pk']).order_by('-created_at')
         return coments
+
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        return user
 
 
     
@@ -65,7 +73,7 @@ class ComentCreateView(LoginRequiredMixin,generic.CreateView):
     model = Coment
     template_name = 'board/coment_create.html'
     form_class = ComentCreateForm
-    success_url = reverse_lazy('board:board_detail')
+    success_url = reverse_lazy('board:board_')
 
     def get_success_url(self):
         return reverse('board:board_detail', kwargs={'pk': self.kwargs['pk']})
@@ -107,6 +115,34 @@ class BoardDeleteView(LoginRequiredMixin,generic.DeleteView):
         messages.success(self.request,"スレッドを削除しました。")
         return super().delete(request,*args,**kwargs)
 
+class ComentUpdateView(LoginRequiredMixin,generic.UpdateView):
+    model = Coment
+    template_name = 'board/coment_update.html'
+    form_class = ComentCreateForm
+
+    def get_success_url(self):
+        coment_id = Coment.objects.filter(id=self.kwargs['pk']).first()
+        board_id = Board.objects.filter(title=coment_id.board).first()
+        return reverse_lazy('board:board_detail',kwargs={'pk': board_id.id})
+
+
+
+    def form_valid(self, form):
+        messages.success(self.request,'コメントを更新しました。')
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.reqest,"コメントの更新に失敗しました。")
+        return super().form_invalid(form)
+
+class ComentDeleteView(LoginRequiredMixin,generic.DeleteView):
+    model = Coment
+    template_name = 'board/coment_delete.html'
+    success_url = reverse_lazy('board:board_list')
+
+    def delete(self,request,*args,**kwargs):
+        messages.success(self.request,"コメントを削除しました。")
+        return super().delete(request,*args,**kwargs)
 
 
 
