@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}コメント作成{% endblock  %}
+
+{% block header %}
+
+<hr>
+  <div class="mt-100 mr-auto ml-auto">
+    <form method="POST" enctype='multipart/form-data'>
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <button class="btn btn-primary" type="submit">作成</button>
+    </form>
+  </div>
+<hr>
+{% endblock %}

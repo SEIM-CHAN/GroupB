@@ -15,11 +15,14 @@ class ThreadCreateForm(forms.ModelForm):
         
 
 class CommentCreateForm(forms.ModelForm):
+    comment = forms.CharField(label='コメント', required=True, widget=forms.Textarea)
     class Meta:
         model = Comment
         fields = ("comment",)
 
         def __init__(self, *args, **kwargs):
             super().__init__( *args, **kwargs)
+            for field in self.fields.values():
+                field.widget.attrs['class'] = 'form-control'
 
 

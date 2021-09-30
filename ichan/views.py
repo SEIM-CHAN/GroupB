@@ -15,7 +15,6 @@ class ThreadListView(LoginRequiredMixin, generic.ListView):
     model = Thread    # Thread.objects.all()を裏側でやってくれてる
     template_name = "thread_list.html"
     context_object_name = "threadList"
-    ordering = "-created_at"
 
     def get_queryset(self):
         threads = Thread.objects.all().order_by('-created_at')
@@ -26,7 +25,7 @@ class ThreadCreateView(LoginRequiredMixin, generic.CreateView):
     model = Thread
     template_name = 'thread_create.html'
     form_class = ThreadCreateForm
-    success_url = reverse_lazy('thread_list')
+    success_url = reverse_lazy('ichan:thread_list')
 
     def form_valid(self, form):
         thread = form.save(commit=False)
@@ -51,74 +50,43 @@ class CommentListView(generic.ListView):
     model = Comment
 
     def get_context_data(self, **kwargs):
-        context = super(CommentListView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context.update({
             'thread': Thread.objects.filter(id=self.kwargs['pk']).first(),
         })
         return context
 
     def get_queryset(self):
-        comments = Comment.objects.filter(thread_id=self.kwargs['pk']).order_by('created_at')
+        comments = Comment.objects.filter(thread=self.kwargs['pk']).order_by('created_at')
         return comments
 
-class CommentCreateView(generic.CreateView):
+class CommentCreateView(LoginRequiredMixin, generic.CreateView):
     """"コメント作成"""
-    template_name = 'comments/comment_create.html'
+    template_name = 'comment/comment_create.html'
     model = Comment
     form_class = CommentCreateForm
 
-    def get_context_data(self, **kwargs):
-        """スレッド番号添付"""
-        context = super().get_context_data(**kwargs)
-        context.update({
-            'pk': self.kwargs['pk'],
-            })
-        return context
+    def get_success_url(self):
+        return reverse_lazy('ichan:comment_list', kwargs={'pk': self.kwargs['pk']})
 
     def form_valid(self, form):
-        """投稿ユーザー判定"""
-        comment = form.save(commit=False)
-        if(self.request.user.is_anonymous):
-            comment.user = None
-        else:
-            comment.user =  self.request.user
-            
-        if comment.text == "":
-            return self.form_invalid(form)
-            
-        comment.nice_thread = Thread.objects.filter(id=self.kwargs['pk']).first()
-        comment.save()
-        messages.success(self.request, 'スレッドを作成しました')
+        thread = form.save(commit=False)
+        thread.user = self.request.user
+        thread.thread = Thread.objects.filter(id=self.kwargs['pk']).first()
+        thread.save()
+        messages.success(self.request,'コメントを作成しました。')
         return super().form_valid(form)
-    
+        
     def form_invalid(self, form):
-        messages.success(self.request, 'スレッドの作成に失敗しました')
+        messages.error(self.request,'コメントの作成に失敗しました。')
         return super().form_invalid(form)
 
-    def get_success_url(self):
-        return reverse('comments', kwargs={'pk': self.kwargs['pk']})
+class ThreadDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Thread
+    template_name = 'thread_delete.html'
+    success_url = reverse_lazy('ichan:thread_list')
 
-class CommentCreateToolView(CommentCreateView):
-    """コメント作成ループ"""
-    def get_success_url(self):
-        return reverse('comment_create_tool', kwargs={'pk': self.kwargs['pk']})
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, "スレッドを削除しました。")
+        return super().delete(request, *args, **kwargs)
 
-
-
-
-
-# def post_list(request, pk):
-#     per_page = 10
-
-#     thread = get_object_or_404(Thread,pk=pk)
-#     post_list= Post.objects.filter(thread=thread)
-#     form = PostForm(request.POST or None)
-
-#     if form.is_valid():
-#         post = form.save(commit=False)
-#         post.thread = thread
-#         post.save()
-#         return redirect('ichan:post', pk=thread.pk)
-
-#     context = {'form': form, 'post_list': post_list}
-#     return render(request, 'post.html', context)
