@@ -1,0 +1,11 @@
+{% extends 'bba/base.html' %}
+
+{% block title %}スレッド{% endblock title %}
+
+{% block content %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <button class="btn btn-primary" type="submit">削除</button>
+    <a class="btn btn-secondary mt-5 ml-2" href="{{ request.META.HTTP_REFERER }}">キャンセル</a>
+</form>
+{% endblock content %}

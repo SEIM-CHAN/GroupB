@@ -27,6 +27,7 @@
         <li>投稿者：{{ item.name }}</li>
         {% if user == item.user %}
         <a href="{% url 'bba:comment_update' item.pk %}">更新</a>
+        <a href="{% url 'bba:comment_delete' item.pk %}">削除</a>
         {% endif %}
         </br></br>
     {% endfor %}

@@ -77,10 +77,6 @@ class CommentUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = CommentUpdateForm
     template_name = 'bba/comment_update.html'
 
-    # def get_success_url(self):
-    #     comment_id =Comment.objects.filter(id=self.kwargs['pk'])
-    #     thread_id = Thread.objects.filter(subject=str(comment_id.thread))
-    #     return reverse_lazy('bba:comment', kwargs={'pk': thread_id.id})
     def get_success_url(self):
         comment_id =Comment.objects.filter(id=self.kwargs['pk']).first()
         thread_id = Thread.objects.filter(subject=comment_id.thread).first()
@@ -88,4 +84,14 @@ class CommentUpdateView(LoginRequiredMixin, generic.UpdateView):
     
     def form_valid(self, form):
         return super().form_valid(form)
+
+class CommentDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Comment
+    template_name = 'bba/comment_delete.html'
+
+    def get_success_url(self):
+        comment_id =Comment.objects.filter(id=self.kwargs['pk']).first()
+        thread_id = Thread.objects.filter(subject=comment_id.thread).first()
+        return reverse_lazy('bba:comment', kwargs={'pk': thread_id.id})
+    
     
